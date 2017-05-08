@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.demo.hr.dao.InterviewDao" >
+
+  <resultMap id="BaseResultMap" type="Interview" >
+	<result column="id" property="id" jdbcType="INTEGER" />
+	<result column="person_id" property="personId" jdbcType="INTEGER" />
+	<result column="name" property="name" jdbcType="VARCHAR" />
+	<result column="post" property="post" jdbcType="VARCHAR" />
+	<result column="post_link" property="postLink" jdbcType="VARCHAR" />
+	<result column="mobile" property="mobile" jdbcType="VARCHAR" />
+	<result column="email" property="email" jdbcType="VARCHAR" />
+	<result column="origin" property="origin" jdbcType="INTEGER" />
+	<result column="way" property="way" jdbcType="INTEGER" />
+	<result column="way_info" property="wayInfo" jdbcType="VARCHAR" />
+	<result column="ms_time" property="msTime" jdbcType="TIMESTAMP" />
+	<result column="ms_address" property="msAddress" jdbcType="VARCHAR" />
+	<result column="ms_type" property="msType" jdbcType="INTEGER" />
+	<result column="hr_id" property="hrId" jdbcType="INTEGER" />
+	<result column="hr_name" property="hrName" jdbcType="VARCHAR" />
+	<result column="hr_mobile" property="hrMobile" jdbcType="VARCHAR" />
+	<result column="hr_email" property="hrEmail" jdbcType="VARCHAR" />
+	<result column="note" property="note" jdbcType="VARCHAR" />
+	<result column="ms_result" property="msResult" jdbcType="INTEGER" />
+	<result column="hr_result" property="hrResult" jdbcType="INTEGER" />
+	<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <sql id="Criteria_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  
+  <sql id="Update_By_Criteria_Where_Clause" >
+    <where >
+      <foreach collection="criteria.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  
+  
+  
+  <sql id="Base_Column_List" >
+    `id`,`person_id`,`name`,`post`,`post_link`,`mobile`,`email`,`origin`,`way`,`way_info`,`ms_time`,`ms_address`,`ms_type`,`hr_id`,`hr_name`,`hr_mobile`,`hr_email`,`note`,`ms_result`,`hr_result`,`create_time`
+  </sql>  
+  
+  <insert id="insert" parameterType="Interview">
+	<selectKey resultType="Integer" keyProperty="id" order="AFTER" > 
+		select last_insert_id() as id 
+	</selectKey> 
+    insert into interview
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+		<if test="id != null" >
+        	`id`,
+    	</if>	
+		<if test="personId != null" >
+        	`person_id`,
+    	</if>	
+		<if test="name != null" >
+        	`name`,
+    	</if>	
+		<if test="post != null" >
+        	`post`,
+    	</if>	
+		<if test="postLink != null" >
+        	`post_link`,
+    	</if>	
+		<if test="mobile != null" >
+        	`mobile`,
+    	</if>	
+		<if test="email != null" >
+        	`email`,
+    	</if>	
+		<if test="origin != null" >
+        	`origin`,
+    	</if>	
+		<if test="way != null" >
+        	`way`,
+    	</if>	
+		<if test="wayInfo != null" >
+        	`way_info`,
+    	</if>	
+		<if test="msTime != null" >
+        	`ms_time`,
+    	</if>	
+		<if test="msAddress != null" >
+        	`ms_address`,
+    	</if>	
+		<if test="msType != null" >
+        	`ms_type`,
+    	</if>	
+		<if test="hrId != null" >
+        	`hr_id`,
+    	</if>	
+		<if test="hrName != null" >
+        	`hr_name`,
+    	</if>	
+		<if test="hrMobile != null" >
+        	`hr_mobile`,
+    	</if>	
+		<if test="hrEmail != null" >
+        	`hr_email`,
+    	</if>	
+		<if test="note != null" >
+        	`note`,
+    	</if>	
+		<if test="msResult != null" >
+        	`ms_result`,
+    	</if>	
+		<if test="hrResult != null" >
+        	`hr_result`,
+    	</if>	
+		<if test="createTime != null" >
+        	`create_time`,
+    	</if>	
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+		<if test="id != null" >
+        	#{id,jdbcType=INTEGER},
+    	</if>	
+		<if test="personId != null" >
+        	#{personId,jdbcType=INTEGER},
+    	</if>	
+		<if test="name != null" >
+        	#{name,jdbcType=VARCHAR},
+    	</if>	
+		<if test="post != null" >
+        	#{post,jdbcType=VARCHAR},
+    	</if>	
+		<if test="postLink != null" >
+        	#{postLink,jdbcType=VARCHAR},
+    	</if>	
+		<if test="mobile != null" >
+        	#{mobile,jdbcType=VARCHAR},
+    	</if>	
+		<if test="email != null" >
+        	#{email,jdbcType=VARCHAR},
+    	</if>	
+		<if test="origin != null" >
+        	#{origin,jdbcType=INTEGER},
+    	</if>	
+		<if test="way != null" >
+        	#{way,jdbcType=INTEGER},
+    	</if>	
+		<if test="wayInfo != null" >
+        	#{wayInfo,jdbcType=VARCHAR},
+    	</if>	
+		<if test="msTime != null" >
+        	#{msTime,jdbcType=TIMESTAMP},
+    	</if>	
+		<if test="msAddress != null" >
+        	#{msAddress,jdbcType=VARCHAR},
+    	</if>	
+		<if test="msType != null" >
+        	#{msType,jdbcType=INTEGER},
+    	</if>	
+		<if test="hrId != null" >
+        	#{hrId,jdbcType=INTEGER},
+    	</if>	
+		<if test="hrName != null" >
+        	#{hrName,jdbcType=VARCHAR},
+    	</if>	
+		<if test="hrMobile != null" >
+        	#{hrMobile,jdbcType=VARCHAR},
+    	</if>	
+		<if test="hrEmail != null" >
+        	#{hrEmail,jdbcType=VARCHAR},
+    	</if>	
+		<if test="note != null" >
+        	#{note,jdbcType=VARCHAR},
+    	</if>	
+		<if test="msResult != null" >
+        	#{msResult,jdbcType=INTEGER},
+    	</if>	
+		<if test="hrResult != null" >
+        	#{hrResult,jdbcType=INTEGER},
+    	</if>	
+		<if test="createTime != null" >
+        	#{createTime,jdbcType=TIMESTAMP},
+    	</if>	
+    </trim>
+  </insert>
+
+  <delete id="deleteById" parameterType="Integer">
+    delete from interview where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <delete id="delete" parameterType="com.demo.hr.entity.criteria.InterviewCriteria">
+    delete from interview 
+    <if test="_parameter != null" >
+      <include refid="Criteria_Where_Clause" />
+    </if>
+  </delete>
+ 
+  <update id="updateById" parameterType="Interview">
+    update interview
+    <set>
+		<if test="personId != null" >
+        	`person_id` = #{personId,jdbcType=INTEGER},
+    	</if>	
+		<if test="name != null" >
+        	`name` = #{name,jdbcType=VARCHAR},
+    	</if>	
+		<if test="post != null" >
+        	`post` = #{post,jdbcType=VARCHAR},
+    	</if>	
+		<if test="postLink != null" >
+        	`post_link` = #{postLink,jdbcType=VARCHAR},
+    	</if>	
+		<if test="mobile != null" >
+        	`mobile` = #{mobile,jdbcType=VARCHAR},
+    	</if>	
+		<if test="email != null" >
+        	`email` = #{email,jdbcType=VARCHAR},
+    	</if>	
+		<if test="origin != null" >
+        	`origin` = #{origin,jdbcType=INTEGER},
+    	</if>	
+		<if test="way != null" >
+        	`way` = #{way,jdbcType=INTEGER},
+    	</if>	
+		<if test="wayInfo != null" >
+        	`way_info` = #{wayInfo,jdbcType=VARCHAR},
+    	</if>	
+		<if test="msTime != null" >
+        	`ms_time` = #{msTime,jdbcType=TIMESTAMP},
+    	</if>	
+		<if test="msAddress != null" >
+        	`ms_address` = #{msAddress,jdbcType=VARCHAR},
+    	</if>	
+		<if test="msType != null" >
+        	`ms_type` = #{msType,jdbcType=INTEGER},
+    	</if>	
+		<if test="hrId != null" >
+        	`hr_id` = #{hrId,jdbcType=INTEGER},
+    	</if>	
+		<if test="hrName != null" >
+        	`hr_name` = #{hrName,jdbcType=VARCHAR},
+    	</if>	
+		<if test="hrMobile != null" >
+        	`hr_mobile` = #{hrMobile,jdbcType=VARCHAR},
+    	</if>	
+		<if test="hrEmail != null" >
+        	`hr_email` = #{hrEmail,jdbcType=VARCHAR},
+    	</if>	
+		<if test="note != null" >
+        	`note` = #{note,jdbcType=VARCHAR},
+    	</if>	
+		<if test="msResult != null" >
+        	`ms_result` = #{msResult,jdbcType=INTEGER},
+    	</if>	
+		<if test="hrResult != null" >
+        	`hr_result` = #{hrResult,jdbcType=INTEGER},
+    	</if>	
+		<if test="createTime != null" >
+        	`create_time` = #{createTime,jdbcType=TIMESTAMP},
+    	</if>	
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    
+  <update id="update" parameterType="map">
+    update interview 
+    <set>
+		<if test="record.personId != null" >
+        	`person_id` = #{record.personId,jdbcType=INTEGER},
+    	</if>	
+		<if test="record.name != null" >
+        	`name` = #{record.name,jdbcType=VARCHAR},
+    	</if>	
+		<if test="record.post != null" >
+        	`post` = #{record.post,jdbcType=VARCHAR},
+    	</if>	
+		<if test="record.postLink != null" >
+        	`post_link` = #{record.postLink,jdbcType=VARCHAR},
+    	</if>	
+		<if test="record.mobile != null" >
+        	`mobile` = #{record.mobile,jdbcType=VARCHAR},
+    	</if>	
+		<if test="record.email != null" >
+        	`email` = #{record.email,jdbcType=VARCHAR},
+    	</if>	
+		<if test="record.origin != null" >
+        	`origin` = #{record.origin,jdbcType=INTEGER},
+    	</if>	
+		<if test="record.way != null" >
+        	`way` = #{record.way,jdbcType=INTEGER},
+    	</if>	
+		<if test="record.wayInfo != null" >
+        	`way_info` = #{record.wayInfo,jdbcType=VARCHAR},
+    	</if>	
+		<if test="record.msTime != null" >
+        	`ms_time` = #{record.msTime,jdbcType=TIMESTAMP},
+    	</if>	
+		<if test="record.msAddress != null" >
+        	`ms_address` = #{record.msAddress,jdbcType=VARCHAR},
+    	</if>	
+		<if test="record.msType != null" >
+        	`ms_type` = #{record.msType,jdbcType=INTEGER},
+    	</if>	
+		<if test="record.hrId != null" >
+        	`hr_id` = #{record.hrId,jdbcType=INTEGER},
+    	</if>	
+		<if test="record.hrName != null" >
+        	`hr_name` = #{record.hrName,jdbcType=VARCHAR},
+    	</if>	
+		<if test="record.hrMobile != null" >
+        	`hr_mobile` = #{record.hrMobile,jdbcType=VARCHAR},
+    	</if>	
+		<if test="record.hrEmail != null" >
+        	`hr_email` = #{record.hrEmail,jdbcType=VARCHAR},
+    	</if>	
+		<if test="record.note != null" >
+        	`note` = #{record.note,jdbcType=VARCHAR},
+    	</if>	
+		<if test="record.msResult != null" >
+        	`ms_result` = #{record.msResult,jdbcType=INTEGER},
+    	</if>	
+		<if test="record.hrResult != null" >
+        	`hr_result` = #{record.hrResult,jdbcType=INTEGER},
+    	</if>	
+		<if test="record.createTime != null" >
+        	`create_time` = #{record.createTime,jdbcType=TIMESTAMP},
+    	</if>	
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Criteria_Where_Clause" />
+    </if>
+  </update>
+    
+  <select id="count" parameterType="com.demo.hr.entity.criteria.InterviewCriteria" resultType="java.lang.Integer">
+    select count(*) from interview 
+    <if test="_parameter != null" >
+      <include refid="Criteria_Where_Clause" />
+    </if>
+  </select>
+  
+  <select id="selectById" resultMap="BaseResultMap" parameterType="Integer">
+    select 
+    <include refid="Base_Column_List" />
+    from interview 
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+    
+  <select id="select" resultMap="BaseResultMap" parameterType="com.demo.hr.entity.criteria.InterviewCriteria">
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from interview 
+    <if test="_parameter != null" >
+      <include refid="Criteria_Where_Clause" />
+    </if>
+    <if test="sort != null" >
+		<if test="sort == 'id'">
+			order by `id` ${order}	
+		</if>
+		<if test="sort == 'personId'">
+			order by `person_id` ${order}	
+		</if>
+		<if test="sort == 'name'">
+			order by `name` ${order}	
+		</if>
+		<if test="sort == 'post'">
+			order by `post` ${order}	
+		</if>
+		<if test="sort == 'postLink'">
+			order by `post_link` ${order}	
+		</if>
+		<if test="sort == 'mobile'">
+			order by `mobile` ${order}	
+		</if>
+		<if test="sort == 'email'">
+			order by `email` ${order}	
+		</if>
+		<if test="sort == 'origin'">
+			order by `origin` ${order}	
+		</if>
+		<if test="sort == 'way'">
+			order by `way` ${order}	
+		</if>
+		<if test="sort == 'wayInfo'">
+			order by `way_info` ${order}	
+		</if>
+		<if test="sort == 'msTime'">
+			order by `ms_time` ${order}	
+		</if>
+		<if test="sort == 'msAddress'">
+			order by `ms_address` ${order}	
+		</if>
+		<if test="sort == 'msType'">
+			order by `ms_type` ${order}	
+		</if>
+		<if test="sort == 'hrId'">
+			order by `hr_id` ${order}	
+		</if>
+		<if test="sort == 'hrName'">
+			order by `hr_name` ${order}	
+		</if>
+		<if test="sort == 'hrMobile'">
+			order by `hr_mobile` ${order}	
+		</if>
+		<if test="sort == 'hrEmail'">
+			order by `hr_email` ${order}	
+		</if>
+		<if test="sort == 'note'">
+			order by `note` ${order}	
+		</if>
+		<if test="sort == 'msResult'">
+			order by `ms_result` ${order}	
+		</if>
+		<if test="sort == 'hrResult'">
+			order by `hr_result` ${order}	
+		</if>
+		<if test="sort == 'createTime'">
+			order by `create_time` ${order}	
+		</if>
+    </if>
+  </select>  
+  
+</mapper>

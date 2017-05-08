@@ -1,0 +1,26 @@
+数据初始化说明
+
+1、执行 01_create_hr.sql 脚本仅仅是数据库建表
+
+2、执行 02_init_hr.sql 初始化HR信息
+
+3、执行 03_init_interviewer.sql 初始化面试官信息
+
+4、执行04_init_post.sql 初始化 招聘岗位信息
+
+备注
+interviewer.txt 和 post.txt文件仅仅是通过文本工具切割成的数据 ，
+com.demo.hr.utils.ReadFileInitSqlUtil.java 将这两个文件的数据 生成对应的 sql初始化脚本
+
+=====测试的的邮箱
+INSERT INTO `staff` (`name`, `pwd`, `mobile`, `email`, `wechat`,  `status`, `type`, `create_time`) 
+VALUES ('张宇航-面试官', '18682002618', '18682002618', 'zhangyhq@xxx.com', '平台开发部', 1, 0, now());
+
+INSERT INTO `staff` (`name`, `pwd`, `mobile`, `email`, `wechat`, `department`, `major`, `status`, `type`, `create_time`) 
+VALUES ('屈亚锋-HR', '15876566358', '15876566358', 'quyf@xxx.com', '', '平台开发部', '', 1, 1, now());
+
+INSERT INTO `staff` (`name`, `pwd`, `mobile`, `email`, `wechat`,  `status`, `type`, `create_time`) 
+VALUES ('张宇航-HR', '18682002618', '18682002618', 'zhangyhq@xxx.com', '平台开发部', 1, 1, now());
+
+INSERT INTO `staff` (`name`, `pwd`, `mobile`, `email`, `wechat`, `department`, `major`, `status`, `type`, `create_time`) 
+VALUES ('屈亚锋-面试官', '15876566358', '15876566358', 'quyf@xxx.com', '', '平台开发部', '', 1, 0, now());

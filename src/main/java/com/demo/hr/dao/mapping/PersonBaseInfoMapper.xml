@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.demo.hr.dao.PersonBaseInfoDao" >
+
+  <resultMap id="BaseResultMap" type="PersonBaseInfo" >
+	<result column="id" property="id" jdbcType="INTEGER" />
+	<result column="person_id" property="personId" jdbcType="INTEGER" />
+	<result column="post" property="post" jdbcType="VARCHAR" />
+	<result column="name" property="name" jdbcType="VARCHAR" />
+	<result column="sex" property="sex" jdbcType="CHAR" />
+	<result column="jiguan" property="jiguan" jdbcType="VARCHAR" />
+	<result column="minzu" property="minzu" jdbcType="VARCHAR" />
+	<result column="birthday" property="birthday" jdbcType="VARCHAR" />
+	<result column="now_address" property="nowAddress" jdbcType="VARCHAR" />
+	<result column="marray_flag" property="marrayFlag" jdbcType="BIT" />
+	<result column="peiou_name" property="peiouName" jdbcType="VARCHAR" />
+	<result column="work_company" property="workCompany" jdbcType="VARCHAR" />
+	<result column="babys" property="babys" jdbcType="INTEGER" />
+	<result column="dispute" property="dispute" jdbcType="INTEGER" />
+	<result column="year_salary" property="yearSalary" jdbcType="VARCHAR" />
+	<result column="month_salary" property="monthSalary" jdbcType="VARCHAR" />
+	<result column="work_time" property="workTime" jdbcType="VARCHAR" />
+	<result column="promisee" property="promisee" jdbcType="VARCHAR" />
+	<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+	<result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <sql id="Criteria_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  
+  <sql id="Update_By_Criteria_Where_Clause" >
+    <where >
+      <foreach collection="criteria.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  
+  
+  
+  <sql id="Base_Column_List" >
+    `id`,`person_id`,`post`,`name`,`sex`,`jiguan`,`minzu`,`birthday`,`now_address`,`marray_flag`,`peiou_name`,`work_company`,`babys`,`dispute`,`year_salary`,`month_salary`,`work_time`,`promisee`,`create_time`,`modify_time`
+  </sql>  
+  
+  <insert id="insert" parameterType="PersonBaseInfo">
+	<selectKey resultType="Integer" keyProperty="id" order="AFTER" > 
+		select last_insert_id() as id 
+	</selectKey> 
+    insert into person_base_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+		<if test="id != null" >
+        	`id`,
+    	</if>	
+		<if test="personId != null" >
+        	`person_id`,
+    	</if>	
+		<if test="post != null" >
+        	`post`,
+    	</if>	
+		<if test="name != null" >
+        	`name`,
+    	</if>	
+		<if test="sex != null" >
+        	`sex`,
+    	</if>	
+		<if test="jiguan != null" >
+        	`jiguan`,
+    	</if>	
+		<if test="minzu != null" >
+        	`minzu`,
+    	</if>	
+		<if test="birthday != null" >
+        	`birthday`,
+    	</if>	
+		<if test="nowAddress != null" >
+        	`now_address`,
+    	</if>	
+		<if test="marrayFlag != null" >
+        	`marray_flag`,
+    	</if>	
+		<if test="peiouName != null" >
+        	`peiou_name`,
+    	</if>	
+		<if test="workCompany != null" >
+        	`work_company`,
+    	</if>	
+		<if test="babys != null" >
+        	`babys`,
+    	</if>	
+		<if test="dispute != null" >
+        	`dispute`,
+    	</if>	
+		<if test="yearSalary != null" >
+        	`year_salary`,
+    	</if>	
+		<if test="monthSalary != null" >
+        	`month_salary`,
+    	</if>	
+		<if test="workTime != null" >
+        	`work_time`,
+    	</if>	
+		<if test="promisee != null" >
+        	`promisee`,
+    	</if>	
+		<if test="createTime != null" >
+        	`create_time`,
+    	</if>	
+		<if test="modifyTime != null" >
+        	`modify_time`,
+    	</if>	
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+		<if test="id != null" >
+        	#{id,jdbcType=INTEGER},
+    	</if>	
+		<if test="personId != null" >
+        	#{personId,jdbcType=INTEGER},
+    	</if>	
+		<if test="post != null" >
+        	#{post,jdbcType=VARCHAR},
+    	</if>	
+		<if test="name != null" >
+        	#{name,jdbcType=VARCHAR},
+    	</if>	
+		<if test="sex != null" >
+        	#{sex,jdbcType=CHAR},
+    	</if>	
+		<if test="jiguan != null" >
+        	#{jiguan,jdbcType=VARCHAR},
+    	</if>	
+		<if test="minzu != null" >
+        	#{minzu,jdbcType=VARCHAR},
+    	</if>	
+		<if test="birthday != null" >
+        	#{birthday,jdbcType=VARCHAR},
+    	</if>	
+		<if test="nowAddress != null" >
+        	#{nowAddress,jdbcType=VARCHAR},
+    	</if>	
+		<if test="marrayFlag != null" >
+        	#{marrayFlag,jdbcType=BIT},
+    	</if>	
+		<if test="peiouName != null" >
+        	#{peiouName,jdbcType=VARCHAR},
+    	</if>	
+		<if test="workCompany != null" >
+        	#{workCompany,jdbcType=VARCHAR},
+    	</if>	
+		<if test="babys != null" >
+        	#{babys,jdbcType=INTEGER},
+    	</if>	
+		<if test="dispute != null" >
+        	#{dispute,jdbcType=INTEGER},
+    	</if>	
+		<if test="yearSalary != null" >
+        	#{yearSalary,jdbcType=VARCHAR},
+    	</if>	
+		<if test="monthSalary != null" >
+        	#{monthSalary,jdbcType=VARCHAR},
+    	</if>	
+		<if test="workTime != null" >
+        	#{workTime,jdbcType=VARCHAR},
+    	</if>	
+		<if test="promisee != null" >
+        	#{promisee,jdbcType=VARCHAR},
+    	</if>	
+		<if test="createTime != null" >
+        	#{createTime,jdbcType=TIMESTAMP},
+    	</if>	
+		<if test="modifyTime != null" >
+        	#{modifyTime,jdbcType=TIMESTAMP},
+    	</if>	
+    </trim>
+  </insert>
+
+  <delete id="deleteById" parameterType="Integer">
+    delete from person_base_info where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <delete id="delete" parameterType="com.demo.hr.entity.criteria.PersonBaseInfoCriteria">
+    delete from person_base_info 
+    <if test="_parameter != null" >
+      <include refid="Criteria_Where_Clause" />
+    </if>
+  </delete>
+ 
+  <update id="updateById" parameterType="PersonBaseInfo">
+    update person_base_info
+    <set>
+		<if test="personId != null" >
+        	`person_id` = #{personId,jdbcType=INTEGER},
+    	</if>	
+		<if test="post != null" >
+        	`post` = #{post,jdbcType=VARCHAR},
+    	</if>	
+		<if test="name != null" >
+        	`name` = #{name,jdbcType=VARCHAR},
+    	</if>	
+		<if test="sex != null" >
+        	`sex` = #{sex,jdbcType=CHAR},
+    	</if>	
+		<if test="jiguan != null" >
+        	`jiguan` = #{jiguan,jdbcType=VARCHAR},
+    	</if>	
+		<if test="minzu != null" >
+        	`minzu` = #{minzu,jdbcType=VARCHAR},
+    	</if>	
+		<if test="birthday != null" >
+        	`birthday` = #{birthday,jdbcType=VARCHAR},
+    	</if>	
+		<if test="nowAddress != null" >
+        	`now_address` = #{nowAddress,jdbcType=VARCHAR},
+    	</if>	
+		<if test="marrayFlag != null" >
+        	`marray_flag` = #{marrayFlag,jdbcType=BIT},
+    	</if>	
+		<if test="peiouName != null" >
+        	`peiou_name` = #{peiouName,jdbcType=VARCHAR},
+    	</if>	
+		<if test="workCompany != null" >
+        	`work_company` = #{workCompany,jdbcType=VARCHAR},
+    	</if>	
+		<if test="babys != null" >
+        	`babys` = #{babys,jdbcType=INTEGER},
+    	</if>	
+		<if test="dispute != null" >
+        	`dispute` = #{dispute,jdbcType=INTEGER},
+    	</if>	
+		<if test="yearSalary != null" >
+        	`year_salary` = #{yearSalary,jdbcType=VARCHAR},
+    	</if>	
+		<if test="monthSalary != null" >
+        	`month_salary` = #{monthSalary,jdbcType=VARCHAR},
+    	</if>	
+		<if test="workTime != null" >
+        	`work_time` = #{workTime,jdbcType=VARCHAR},
+    	</if>	
+		<if test="promisee != null" >
+        	`promisee` = #{promisee,jdbcType=VARCHAR},
+    	</if>	
+		<if test="createTime != null" >
+        	`create_time` = #{createTime,jdbcType=TIMESTAMP},
+    	</if>	
+		<if test="modifyTime != null" >
+        	`modify_time` = #{modifyTime,jdbcType=TIMESTAMP},
+    	</if>	
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    
+  <update id="update" parameterType="map">
+    update person_base_info 
+    <set>
+		<if test="record.personId != null" >
+        	`person_id` = #{record.personId,jdbcType=INTEGER},
+    	</if>	
+		<if test="record.post != null" >
+        	`post` = #{record.post,jdbcType=VARCHAR},
+    	</if>	
+		<if test="record.name != null" >
+        	`name` = #{record.name,jdbcType=VARCHAR},
+    	</if>	
+		<if test="record.sex != null" >
+        	`sex` = #{record.sex,jdbcType=CHAR},
+    	</if>	
+		<if test="record.jiguan != null" >
+        	`jiguan` = #{record.jiguan,jdbcType=VARCHAR},
+    	</if>	
+		<if test="record.minzu != null" >
+        	`minzu` = #{record.minzu,jdbcType=VARCHAR},
+    	</if>	
+		<if test="record.birthday != null" >
+        	`birthday` = #{record.birthday,jdbcType=VARCHAR},
+    	</if>	
+		<if test="record.nowAddress != null" >
+        	`now_address` = #{record.nowAddress,jdbcType=VARCHAR},
+    	</if>	
+		<if test="record.marrayFlag != null" >
+        	`marray_flag` = #{record.marrayFlag,jdbcType=BIT},
+    	</if>	
+		<if test="record.peiouName != null" >
+        	`peiou_name` = #{record.peiouName,jdbcType=VARCHAR},
+    	</if>	
+		<if test="record.workCompany != null" >
+        	`work_company` = #{record.workCompany,jdbcType=VARCHAR},
+    	</if>	
+		<if test="record.babys != null" >
+        	`babys` = #{record.babys,jdbcType=INTEGER},
+    	</if>	
+		<if test="record.dispute != null" >
+        	`dispute` = #{record.dispute,jdbcType=INTEGER},
+    	</if>	
+		<if test="record.yearSalary != null" >
+        	`year_salary` = #{record.yearSalary,jdbcType=VARCHAR},
+    	</if>	
+		<if test="record.monthSalary != null" >
+        	`month_salary` = #{record.monthSalary,jdbcType=VARCHAR},
+    	</if>	
+		<if test="record.workTime != null" >
+        	`work_time` = #{record.workTime,jdbcType=VARCHAR},
+    	</if>	
+		<if test="record.promisee != null" >
+        	`promisee` = #{record.promisee,jdbcType=VARCHAR},
+    	</if>	
+		<if test="record.createTime != null" >
+        	`create_time` = #{record.createTime,jdbcType=TIMESTAMP},
+    	</if>	
+		<if test="record.modifyTime != null" >
+        	`modify_time` = #{record.modifyTime,jdbcType=TIMESTAMP},
+    	</if>	
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Criteria_Where_Clause" />
+    </if>
+  </update>
+    
+  <select id="count" parameterType="com.demo.hr.entity.criteria.PersonBaseInfoCriteria" resultType="java.lang.Integer">
+    select count(*) from person_base_info 
+    <if test="_parameter != null" >
+      <include refid="Criteria_Where_Clause" />
+    </if>
+  </select>
+  
+  <select id="selectById" resultMap="BaseResultMap" parameterType="Integer">
+    select 
+    <include refid="Base_Column_List" />
+    from person_base_info 
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+    
+   <select id="selectByPersonId" resultMap="BaseResultMap" parameterType="Integer">
+    select 
+    <include refid="Base_Column_List" />
+    from person_base_info 
+    where person_id = #{pid,jdbcType=INTEGER}
+  </select>
+  
+  <select id="select" resultMap="BaseResultMap" parameterType="com.demo.hr.entity.criteria.PersonBaseInfoCriteria">
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from person_base_info 
+    <if test="_parameter != null" >
+      <include refid="Criteria_Where_Clause" />
+    </if>
+    <if test="sort != null" >
+		<if test="sort == 'id'">
+			order by `id` ${order}	
+		</if>
+		<if test="sort == 'personId'">
+			order by `person_id` ${order}	
+		</if>
+		<if test="sort == 'post'">
+			order by `post` ${order}	
+		</if>
+		<if test="sort == 'name'">
+			order by `name` ${order}	
+		</if>
+		<if test="sort == 'sex'">
+			order by `sex` ${order}	
+		</if>
+		<if test="sort == 'jiguan'">
+			order by `jiguan` ${order}	
+		</if>
+		<if test="sort == 'minzu'">
+			order by `minzu` ${order}	
+		</if>
+		<if test="sort == 'birthday'">
+			order by `birthday` ${order}	
+		</if>
+		<if test="sort == 'nowAddress'">
+			order by `now_address` ${order}	
+		</if>
+		<if test="sort == 'marrayFlag'">
+			order by `marray_flag` ${order}	
+		</if>
+		<if test="sort == 'peiouName'">
+			order by `peiou_name` ${order}	
+		</if>
+		<if test="sort == 'workCompany'">
+			order by `work_company` ${order}	
+		</if>
+		<if test="sort == 'babys'">
+			order by `babys` ${order}	
+		</if>
+		<if test="sort == 'dispute'">
+			order by `dispute` ${order}	
+		</if>
+		<if test="sort == 'yearSalary'">
+			order by `year_salary` ${order}	
+		</if>
+		<if test="sort == 'monthSalary'">
+			order by `month_salary` ${order}	
+		</if>
+		<if test="sort == 'workTime'">
+			order by `work_time` ${order}	
+		</if>
+		<if test="sort == 'promisee'">
+			order by `promisee` ${order}	
+		</if>
+		<if test="sort == 'createTime'">
+			order by `create_time` ${order}	
+		</if>
+		<if test="sort == 'modifyTime'">
+			order by `modify_time` ${order}	
+		</if>
+    </if>
+  </select>  
+  
+</mapper>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- 定时去扫描反馈表 去发送面试反馈邮件 -->
+	<bean id="feedbackTaskJob" class="com.demo.hr.job.FeedbackEmailQuartz" />
+	
+	<bean id="feedbackTaskJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="group" value="hr_quartz_job" />
+		<property name="name" value="hr_quartz_job_name" />
+		<!--false表示等上一个任务执行完后再开启新的任务 -->
+		<property name="concurrent" value="false" />
+		<property name="targetObject">
+			<ref bean="feedbackTaskJob" />
+		</property>
+		<property name="targetMethod">
+			<value>run</value>
+		</property>
+	</bean>
+
+	<!-- 调度触发器 20分钟执行一次 -->
+	<bean id="feedbackTaskTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="name" value="work_default_name" />
+		<property name="group" value="work_default" />
+		<property name="jobDetail">
+			<ref bean="feedbackTaskJobDetail" />
+		</property>
+		<property name="cronExpression">
+			<value>0/10 * * * * ?</value>
+			<!-- <value>0 0/20 * * * ?</value> -->
+			<!--  s m h d m w(?) y(?) ,   分别对应: 秒>分>小时>日>月>周>年,  -->
+		</property>
+	</bean>
+
+<!-- 定时去扫描面试淘汰记录 去发送面试淘汰邮件 -->
+	<bean id="interviewFailureJob" class="com.demo.hr.job.FailureEmailQuartz" />
+	
+	<bean id="interviewFailureJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="group" value="hr_quartz_job1" />
+		<property name="name" value="hr_quartz_job_name1" />
+		<!--false表示等上一个任务执行完后再开启新的任务 -->
+		<property name="concurrent" value="false" />
+		<property name="targetObject">
+			<ref bean="interviewFailureJob" />
+		</property>
+		<property name="targetMethod">
+			<value>run</value>
+		</property>
+	</bean>
+
+	<!-- 调度触发器 20分钟执行一次 -->
+	<bean id="interviewFailureTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="name" value="work_default_name1" />
+		<property name="group" value="work_default1" />
+		<property name="jobDetail">
+			<ref bean="interviewFailureJobDetail" />
+		</property>
+		<property name="cronExpression">
+			<value>0/10 * * * * ?</value>
+			<!--  s m h d m w(?) y(?) ,   分别对应: 秒>分>小时>日>月>周>年,  -->
+		</property>
+	</bean>
+	
+	<!-- 调度工厂 -->
+	<bean id="scheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="feedbackTaskTrigger" />
+				<ref bean="interviewFailureTrigger" />
+			</list>
+		</property>
+	</bean>
+	
+</beans>

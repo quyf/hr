@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.demo.hr.dao.FeedbackDao" >
+
+  <resultMap id="BaseResultMap" type="Feedback" >
+	<result column="id" property="id" jdbcType="INTEGER" />
+	<result column="feedback_id" property="feedbackId" jdbcType="INTEGER" />
+	<result column="interview_id" property="interviewId" jdbcType="INTEGER" />
+	<result column="person_id" property="personId" jdbcType="INTEGER" />
+	<result column="person_name" property="personName" jdbcType="VARCHAR" />
+	<result column="staff_id" property="staffId" jdbcType="INTEGER" />
+	<result column="staff_name" property="staffName" jdbcType="VARCHAR" />
+	<result column="ms_type" property="msType" jdbcType="INTEGER" />
+	<result column="type" property="type" jdbcType="INTEGER" />
+	<result column="result" property="result" jdbcType="INTEGER" />
+	<result column="content" property="content" jdbcType="VARCHAR" />
+	<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <sql id="Criteria_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  
+  <sql id="Update_By_Criteria_Where_Clause" >
+    <where >
+      <foreach collection="criteria.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  
+  
+  
+  <sql id="Base_Column_List" >
+    `id`,`feedback_id`,`interview_id`,`person_id`,`person_name`,`staff_id`,`staff_name`,`ms_type`,`type`,`result`,`content`,`create_time`
+  </sql>  
+  
+  <insert id="insert" parameterType="Feedback">
+	<selectKey resultType="Integer" keyProperty="id" order="AFTER" > 
+		select last_insert_id() as id 
+	</selectKey> 
+    insert into feedback
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+		<if test="id != null" >
+        	`id`,
+    	</if>	
+		<if test="feedbackId != null" >
+        	`feedback_id`,
+    	</if>	
+		<if test="interviewId != null" >
+        	`interview_id`,
+    	</if>	
+		<if test="personId != null" >
+        	`person_id`,
+    	</if>	
+		<if test="personName != null" >
+        	`person_name`,
+    	</if>	
+		<if test="staffId != null" >
+        	`staff_id`,
+    	</if>	
+		<if test="staffName != null" >
+        	`staff_name`,
+    	</if>	
+		<if test="msType != null" >
+        	`ms_type`,
+    	</if>	
+		<if test="type != null" >
+        	`type`,
+    	</if>	
+		<if test="result != null" >
+        	`result`,
+    	</if>	
+		<if test="content != null" >
+        	`content`,
+    	</if>	
+		<if test="createTime != null" >
+        	`create_time`,
+    	</if>	
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+		<if test="id != null" >
+        	#{id,jdbcType=INTEGER},
+    	</if>	
+		<if test="feedbackId != null" >
+        	#{feedbackId,jdbcType=INTEGER},
+    	</if>	
+		<if test="interviewId != null" >
+        	#{interviewId,jdbcType=INTEGER},
+    	</if>	
+		<if test="personId != null" >
+        	#{personId,jdbcType=INTEGER},
+    	</if>	
+		<if test="personName != null" >
+        	#{personName,jdbcType=VARCHAR},
+    	</if>	
+		<if test="staffId != null" >
+        	#{staffId,jdbcType=INTEGER},
+    	</if>	
+		<if test="staffName != null" >
+        	#{staffName,jdbcType=VARCHAR},
+    	</if>	
+		<if test="msType != null" >
+        	#{msType,jdbcType=INTEGER},
+    	</if>	
+		<if test="type != null" >
+        	#{type,jdbcType=INTEGER},
+    	</if>	
+		<if test="result != null" >
+        	#{result,jdbcType=INTEGER},
+    	</if>	
+		<if test="content != null" >
+        	#{content,jdbcType=VARCHAR},
+    	</if>	
+		<if test="createTime != null" >
+        	#{createTime,jdbcType=TIMESTAMP},
+    	</if>	
+    </trim>
+  </insert>
+
+  <delete id="deleteById" parameterType="Integer">
+    delete from feedback where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <delete id="delete" parameterType="com.demo.hr.entity.criteria.FeedbackCriteria">
+    delete from feedback 
+    <if test="_parameter != null" >
+      <include refid="Criteria_Where_Clause" />
+    </if>
+  </delete>
+ 
+  <update id="updateById" parameterType="Feedback">
+    update feedback
+    <set>
+		<if test="feedbackId != null" >
+        	`feedback_id` = #{feedbackId,jdbcType=INTEGER},
+    	</if>	
+		<if test="interviewId != null" >
+        	`interview_id` = #{interviewId,jdbcType=INTEGER},
+    	</if>	
+		<if test="personId != null" >
+        	`person_id` = #{personId,jdbcType=INTEGER},
+    	</if>	
+		<if test="personName != null" >
+        	`person_name` = #{personName,jdbcType=VARCHAR},
+    	</if>	
+		<if test="staffId != null" >
+        	`staff_id` = #{staffId,jdbcType=INTEGER},
+    	</if>	
+		<if test="staffName != null" >
+        	`staff_name` = #{staffName,jdbcType=VARCHAR},
+    	</if>	
+		<if test="msType != null" >
+        	`ms_type` = #{msType,jdbcType=INTEGER},
+    	</if>	
+		<if test="type != null" >
+        	`type` = #{type,jdbcType=INTEGER},
+    	</if>	
+		<if test="result != null" >
+        	`result` = #{result,jdbcType=INTEGER},
+    	</if>	
+		<if test="content != null" >
+        	`content` = #{content,jdbcType=VARCHAR},
+    	</if>	
+		<if test="createTime != null" >
+        	`create_time` = #{createTime,jdbcType=TIMESTAMP},
+    	</if>	
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    
+  <update id="update" parameterType="map">
+    update feedback 
+    <set>
+		<if test="record.feedbackId != null" >
+        	`feedback_id` = #{record.feedbackId,jdbcType=INTEGER},
+    	</if>	
+		<if test="record.interviewId != null" >
+        	`interview_id` = #{record.interviewId,jdbcType=INTEGER},
+    	</if>	
+		<if test="record.personId != null" >
+        	`person_id` = #{record.personId,jdbcType=INTEGER},
+    	</if>	
+		<if test="record.personName != null" >
+        	`person_name` = #{record.personName,jdbcType=VARCHAR},
+    	</if>	
+		<if test="record.staffId != null" >
+        	`staff_id` = #{record.staffId,jdbcType=INTEGER},
+    	</if>	
+		<if test="record.staffName != null" >
+        	`staff_name` = #{record.staffName,jdbcType=VARCHAR},
+    	</if>	
+		<if test="record.msType != null" >
+        	`ms_type` = #{record.msType,jdbcType=INTEGER},
+    	</if>	
+		<if test="record.type != null" >
+        	`type` = #{record.type,jdbcType=INTEGER},
+    	</if>	
+		<if test="record.result != null" >
+        	`result` = #{record.result,jdbcType=INTEGER},
+    	</if>	
+		<if test="record.content != null" >
+        	`content` = #{record.content,jdbcType=VARCHAR},
+    	</if>	
+		<if test="record.createTime != null" >
+        	`create_time` = #{record.createTime,jdbcType=TIMESTAMP},
+    	</if>	
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Criteria_Where_Clause" />
+    </if>
+  </update>
+    
+  <select id="count" parameterType="com.demo.hr.entity.criteria.FeedbackCriteria" resultType="java.lang.Integer">
+    select count(*) from feedback 
+    <if test="_parameter != null" >
+      <include refid="Criteria_Where_Clause" />
+    </if>
+  </select>
+  
+  <select id="selectById" resultMap="BaseResultMap" parameterType="Integer">
+    select 
+    <include refid="Base_Column_List" />
+    from feedback 
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+    
+  <select id="select" resultMap="BaseResultMap" parameterType="com.demo.hr.entity.criteria.FeedbackCriteria">
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from feedback 
+    <if test="_parameter != null" >
+      <include refid="Criteria_Where_Clause" />
+    </if>
+    <if test="sort != null" >
+		<if test="sort == 'id'">
+			order by `id` ${order}	
+		</if>
+		<if test="sort == 'feedbackId'">
+			order by `feedback_id` ${order}	
+		</if>
+		<if test="sort == 'interviewId'">
+			order by `interview_id` ${order}	
+		</if>
+		<if test="sort == 'personId'">
+			order by `person_id` ${order}	
+		</if>
+		<if test="sort == 'personName'">
+			order by `person_name` ${order}	
+		</if>
+		<if test="sort == 'staffId'">
+			order by `staff_id` ${order}	
+		</if>
+		<if test="sort == 'staffName'">
+			order by `staff_name` ${order}	
+		</if>
+		<if test="sort == 'msType'">
+			order by `ms_type` ${order}	
+		</if>
+		<if test="sort == 'type'">
+			order by `type` ${order}	
+		</if>
+		<if test="sort == 'result'">
+			order by `result` ${order}	
+		</if>
+		<if test="sort == 'content'">
+			order by `content` ${order}	
+		</if>
+		<if test="sort == 'createTime'">
+			order by `create_time` ${order}	
+		</if>
+    </if>
+  </select>  
+  
+</mapper>

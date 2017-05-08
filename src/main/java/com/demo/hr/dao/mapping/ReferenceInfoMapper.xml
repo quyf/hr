@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.demo.hr.dao.ReferenceInfoDao" >
+
+  <resultMap id="BaseResultMap" type="ReferenceInfo" >
+	<result column="id" property="id" jdbcType="INTEGER" />
+	<result column="person_id" property="personId" jdbcType="INTEGER" />
+	<result column="hr_name" property="hrName" jdbcType="VARCHAR" />
+	<result column="hr_com_title" property="hrComTitle" jdbcType="VARCHAR" />
+	<result column="hr_link" property="hrLink" jdbcType="VARCHAR" />
+	<result column="hr_email" property="hrEmail" jdbcType="VARCHAR" />
+	<result column="leader_name" property="leaderName" jdbcType="VARCHAR" />
+	<result column="ld_com_title" property="ldComTitle" jdbcType="VARCHAR" />
+	<result column="ld_link" property="ldLink" jdbcType="VARCHAR" />
+	<result column="ld_email" property="ldEmail" jdbcType="VARCHAR" />
+	<result column="has_yy" property="hasYy" jdbcType="INTEGER" />
+	<result column="yy_name" property="yyName" jdbcType="VARCHAR" />
+	<result column="yygx" property="yygx" jdbcType="VARCHAR" />
+	<result column="yy_title" property="yyTitle" jdbcType="VARCHAR" />
+	<result column="yy_email" property="yyEmail" jdbcType="VARCHAR" />
+	<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+	<result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <sql id="Criteria_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  
+  <sql id="Update_By_Criteria_Where_Clause" >
+    <where >
+      <foreach collection="criteria.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  
+  
+  
+  <sql id="Base_Column_List" >
+    `id`,`person_id`,`hr_name`,`hr_com_title`,`hr_link`,`hr_email`,`leader_name`,`ld_com_title`,`ld_link`,`ld_email`,`has_yy`,`yy_name`,`yygx`,`yy_title`,`yy_email`,`create_time`,`modify_time`
+  </sql>  
+  
+  <insert id="insert" parameterType="ReferenceInfo">
+	<selectKey resultType="Integer" keyProperty="id" order="AFTER" > 
+		select last_insert_id() as id 
+	</selectKey> 
+    insert into reference_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+		<if test="id != null" >
+        	`id`,
+    	</if>	
+		<if test="personId != null" >
+        	`person_id`,
+    	</if>	
+		<if test="hrName != null" >
+        	`hr_name`,
+    	</if>	
+		<if test="hrComTitle != null" >
+        	`hr_com_title`,
+    	</if>	
+		<if test="hrLink != null" >
+        	`hr_link`,
+    	</if>	
+		<if test="hrEmail != null" >
+        	`hr_email`,
+    	</if>	
+		<if test="leaderName != null" >
+        	`leader_name`,
+    	</if>	
+		<if test="ldComTitle != null" >
+        	`ld_com_title`,
+    	</if>	
+		<if test="ldLink != null" >
+        	`ld_link`,
+    	</if>	
+		<if test="ldEmail != null" >
+        	`ld_email`,
+    	</if>	
+		<if test="hasYy != null" >
+        	`has_yy`,
+    	</if>	
+		<if test="yyName != null" >
+        	`yy_name`,
+    	</if>	
+		<if test="yygx != null" >
+        	`yygx`,
+    	</if>	
+		<if test="yyTitle != null" >
+        	`yy_title`,
+    	</if>	
+		<if test="yyEmail != null" >
+        	`yy_email`,
+    	</if>	
+		<if test="createTime != null" >
+        	`create_time`,
+    	</if>	
+		<if test="modifyTime != null" >
+        	`modify_time`,
+    	</if>	
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+		<if test="id != null" >
+        	#{id,jdbcType=INTEGER},
+    	</if>	
+		<if test="personId != null" >
+        	#{personId,jdbcType=INTEGER},
+    	</if>	
+		<if test="hrName != null" >
+        	#{hrName,jdbcType=VARCHAR},
+    	</if>	
+		<if test="hrComTitle != null" >
+        	#{hrComTitle,jdbcType=VARCHAR},
+    	</if>	
+		<if test="hrLink != null" >
+        	#{hrLink,jdbcType=VARCHAR},
+    	</if>	
+		<if test="hrEmail != null" >
+        	#{hrEmail,jdbcType=VARCHAR},
+    	</if>	
+		<if test="leaderName != null" >
+        	#{leaderName,jdbcType=VARCHAR},
+    	</if>	
+		<if test="ldComTitle != null" >
+        	#{ldComTitle,jdbcType=VARCHAR},
+    	</if>	
+		<if test="ldLink != null" >
+        	#{ldLink,jdbcType=VARCHAR},
+    	</if>	
+		<if test="ldEmail != null" >
+        	#{ldEmail,jdbcType=VARCHAR},
+    	</if>	
+		<if test="hasYy != null" >
+        	#{hasYy,jdbcType=INTEGER},
+    	</if>	
+		<if test="yyName != null" >
+        	#{yyName,jdbcType=VARCHAR},
+    	</if>	
+		<if test="yygx != null" >
+        	#{yygx,jdbcType=VARCHAR},
+    	</if>	
+		<if test="yyTitle != null" >
+        	#{yyTitle,jdbcType=VARCHAR},
+    	</if>	
+		<if test="yyEmail != null" >
+        	#{yyEmail,jdbcType=VARCHAR},
+    	</if>	
+		<if test="createTime != null" >
+        	#{createTime,jdbcType=TIMESTAMP},
+    	</if>	
+		<if test="modifyTime != null" >
+        	#{modifyTime,jdbcType=TIMESTAMP},
+    	</if>	
+    </trim>
+  </insert>
+
+  <delete id="deleteById" parameterType="Integer">
+    delete from reference_info where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <delete id="delete" parameterType="com.demo.hr.entity.criteria.ReferenceInfoCriteria">
+    delete from reference_info 
+    <if test="_parameter != null" >
+      <include refid="Criteria_Where_Clause" />
+    </if>
+  </delete>
+ 
+  <update id="updateById" parameterType="ReferenceInfo">
+    update reference_info
+    <set>
+		<if test="personId != null" >
+        	`person_id` = #{personId,jdbcType=INTEGER},
+    	</if>	
+		<if test="hrName != null" >
+        	`hr_name` = #{hrName,jdbcType=VARCHAR},
+    	</if>	
+		<if test="hrComTitle != null" >
+        	`hr_com_title` = #{hrComTitle,jdbcType=VARCHAR},
+    	</if>	
+		<if test="hrLink != null" >
+        	`hr_link` = #{hrLink,jdbcType=VARCHAR},
+    	</if>	
+		<if test="hrEmail != null" >
+        	`hr_email` = #{hrEmail,jdbcType=VARCHAR},
+    	</if>	
+		<if test="leaderName != null" >
+        	`leader_name` = #{leaderName,jdbcType=VARCHAR},
+    	</if>	
+		<if test="ldComTitle != null" >
+        	`ld_com_title` = #{ldComTitle,jdbcType=VARCHAR},
+    	</if>	
+		<if test="ldLink != null" >
+        	`ld_link` = #{ldLink,jdbcType=VARCHAR},
+    	</if>	
+		<if test="ldEmail != null" >
+        	`ld_email` = #{ldEmail,jdbcType=VARCHAR},
+    	</if>	
+		<if test="hasYy != null" >
+        	`has_yy` = #{hasYy,jdbcType=INTEGER},
+    	</if>	
+		<if test="yyName != null" >
+        	`yy_name` = #{yyName,jdbcType=VARCHAR},
+    	</if>	
+		<if test="yygx != null" >
+        	`yygx` = #{yygx,jdbcType=VARCHAR},
+    	</if>	
+		<if test="yyTitle != null" >
+        	`yy_title` = #{yyTitle,jdbcType=VARCHAR},
+    	</if>	
+		<if test="yyEmail != null" >
+        	`yy_email` = #{yyEmail,jdbcType=VARCHAR},
+    	</if>	
+		<if test="createTime != null" >
+        	`create_time` = #{createTime,jdbcType=TIMESTAMP},
+    	</if>	
+		<if test="modifyTime != null" >
+        	`modify_time` = #{modifyTime,jdbcType=TIMESTAMP},
+    	</if>	
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    
+  <update id="update" parameterType="map">
+    update reference_info 
+    <set>
+		<if test="record.personId != null" >
+        	`person_id` = #{record.personId,jdbcType=INTEGER},
+    	</if>	
+		<if test="record.hrName != null" >
+        	`hr_name` = #{record.hrName,jdbcType=VARCHAR},
+    	</if>	
+		<if test="record.hrComTitle != null" >
+        	`hr_com_title` = #{record.hrComTitle,jdbcType=VARCHAR},
+    	</if>	
+		<if test="record.hrLink != null" >
+        	`hr_link` = #{record.hrLink,jdbcType=VARCHAR},
+    	</if>	
+		<if test="record.hrEmail != null" >
+        	`hr_email` = #{record.hrEmail,jdbcType=VARCHAR},
+    	</if>	
+		<if test="record.leaderName != null" >
+        	`leader_name` = #{record.leaderName,jdbcType=VARCHAR},
+    	</if>	
+		<if test="record.ldComTitle != null" >
+        	`ld_com_title` = #{record.ldComTitle,jdbcType=VARCHAR},
+    	</if>	
+		<if test="record.ldLink != null" >
+        	`ld_link` = #{record.ldLink,jdbcType=VARCHAR},
+    	</if>	
+		<if test="record.ldEmail != null" >
+        	`ld_email` = #{record.ldEmail,jdbcType=VARCHAR},
+    	</if>	
+		<if test="record.hasYy != null" >
+        	`has_yy` = #{record.hasYy,jdbcType=INTEGER},
+    	</if>	
+		<if test="record.yyName != null" >
+        	`yy_name` = #{record.yyName,jdbcType=VARCHAR},
+    	</if>	
+		<if test="record.yygx != null" >
+        	`yygx` = #{record.yygx,jdbcType=VARCHAR},
+    	</if>	
+		<if test="record.yyTitle != null" >
+        	`yy_title` = #{record.yyTitle,jdbcType=VARCHAR},
+    	</if>	
+		<if test="record.yyEmail != null" >
+        	`yy_email` = #{record.yyEmail,jdbcType=VARCHAR},
+    	</if>	
+		<if test="record.createTime != null" >
+        	`create_time` = #{record.createTime,jdbcType=TIMESTAMP},
+    	</if>	
+		<if test="record.modifyTime != null" >
+        	`modify_time` = #{record.modifyTime,jdbcType=TIMESTAMP},
+    	</if>	
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Criteria_Where_Clause" />
+    </if>
+  </update>
+    
+  <select id="count" parameterType="com.demo.hr.entity.criteria.ReferenceInfoCriteria" resultType="java.lang.Integer">
+    select count(*) from reference_info 
+    <if test="_parameter != null" >
+      <include refid="Criteria_Where_Clause" />
+    </if>
+  </select>
+  
+  <select id="selectById" resultMap="BaseResultMap" parameterType="Integer">
+    select 
+    <include refid="Base_Column_List" />
+    from reference_info 
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+    <select id="selectByPersonId" resultMap="BaseResultMap" parameterType="Integer">
+    select 
+    <include refid="Base_Column_List" />
+    from reference_info 
+    where person_id = #{pid,jdbcType=INTEGER}
+  </select>
+  
+  <select id="select" resultMap="BaseResultMap" parameterType="com.demo.hr.entity.criteria.ReferenceInfoCriteria">
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from reference_info 
+    <if test="_parameter != null" >
+      <include refid="Criteria_Where_Clause" />
+    </if>
+    <if test="sort != null" >
+		<if test="sort == 'id'">
+			order by `id` ${order}	
+		</if>
+		<if test="sort == 'personId'">
+			order by `person_id` ${order}	
+		</if>
+		<if test="sort == 'hrName'">
+			order by `hr_name` ${order}	
+		</if>
+		<if test="sort == 'hrComTitle'">
+			order by `hr_com_title` ${order}	
+		</if>
+		<if test="sort == 'hrLink'">
+			order by `hr_link` ${order}	
+		</if>
+		<if test="sort == 'hrEmail'">
+			order by `hr_email` ${order}	
+		</if>
+		<if test="sort == 'leaderName'">
+			order by `leader_name` ${order}	
+		</if>
+		<if test="sort == 'ldComTitle'">
+			order by `ld_com_title` ${order}	
+		</if>
+		<if test="sort == 'ldLink'">
+			order by `ld_link` ${order}	
+		</if>
+		<if test="sort == 'ldEmail'">
+			order by `ld_email` ${order}	
+		</if>
+		<if test="sort == 'hasYy'">
+			order by `has_yy` ${order}	
+		</if>
+		<if test="sort == 'yyName'">
+			order by `yy_name` ${order}	
+		</if>
+		<if test="sort == 'yygx'">
+			order by `yygx` ${order}	
+		</if>
+		<if test="sort == 'yyTitle'">
+			order by `yy_title` ${order}	
+		</if>
+		<if test="sort == 'yyEmail'">
+			order by `yy_email` ${order}	
+		</if>
+		<if test="sort == 'createTime'">
+			order by `create_time` ${order}	
+		</if>
+		<if test="sort == 'modifyTime'">
+			order by `modify_time` ${order}	
+		</if>
+    </if>
+  </select>  
+  
+</mapper>

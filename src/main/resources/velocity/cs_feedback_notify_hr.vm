@@ -1,0 +1,21 @@
+<html>
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=gb2312">
+<meta name=Generator content="Microsoft Word 15 (filtered)">
+<style>
+
+</style>
+
+</head>
+<body>
+	<p>${hr_name}您好，${staff_name}对${person_name}的初试面试评价已经完成，评价结果为:${ms_result}</p>
+	<ul>
+		<li>工作背景评分为:${ms_content.score.get(0)}</li>
+		<li>工作经验评分为:${ms_content.score.get(1)}</li>
+		<li>专业特长评分为:${ms_content.score.get(2)}</li>
+		<li>技能评级为:${ms_content.tech_grade}</li>
+		<li>面试官意见:${ms_content.opinion}</li>
+	</ul>
+</body>
+</html>

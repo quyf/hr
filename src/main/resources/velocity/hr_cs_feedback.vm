@@ -1,0 +1,9 @@
+<html>
+<head></head>
+
+<body>
+${staff_name}:<br/>
+您好，请您对${post}${person_name}的面试做出评价:<br/>
+<a href='${click_url}'>${click_url}</a>
+</body>
+</html>

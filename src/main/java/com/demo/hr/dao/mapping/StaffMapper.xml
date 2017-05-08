@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.demo.hr.dao.StaffDao" >
+
+  <resultMap id="BaseResultMap" type="Staff" >
+	<result column="id" property="id" jdbcType="INTEGER" />
+	<result column="name" property="name" jdbcType="VARCHAR" />
+	<result column="pwd" property="pwd" jdbcType="VARCHAR" />
+	<result column="mobile" property="mobile" jdbcType="VARCHAR" />
+	<result column="email" property="email" jdbcType="VARCHAR" />
+	<result column="wechat" property="wechat" jdbcType="VARCHAR" />
+	<result column="department" property="department" jdbcType="VARCHAR" />
+	<result column="major" property="major" jdbcType="VARCHAR" />
+	<result column="status" property="status" jdbcType="INTEGER" />
+	<result column="type" property="type" jdbcType="INTEGER" />
+	<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <sql id="Criteria_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  
+  <sql id="Update_By_Criteria_Where_Clause" >
+    <where >
+      <foreach collection="criteria.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  
+  
+  
+  <sql id="Base_Column_List" >
+    `id`,`name`,`pwd`,`mobile`,`email`,`wechat`,`department`,`major`,`status`,`type`,`create_time`
+  </sql>  
+  
+  <insert id="insert" parameterType="Staff">
+	<selectKey resultType="Integer" keyProperty="id" order="AFTER" > 
+		select last_insert_id() as id 
+	</selectKey> 
+    insert into staff
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+		<if test="id != null" >
+        	`id`,
+    	</if>	
+		<if test="name != null" >
+        	`name`,
+    	</if>	
+		<if test="pwd != null" >
+        	`pwd`,
+    	</if>	
+		<if test="mobile != null" >
+        	`mobile`,
+    	</if>	
+		<if test="email != null" >
+        	`email`,
+    	</if>	
+		<if test="wechat != null" >
+        	`wechat`,
+    	</if>	
+		<if test="department != null" >
+        	`department`,
+    	</if>	
+		<if test="major != null" >
+        	`major`,
+    	</if>	
+		<if test="status != null" >
+        	`status`,
+    	</if>	
+		<if test="type != null" >
+        	`type`,
+    	</if>	
+		<if test="createTime != null" >
+        	`create_time`,
+    	</if>	
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+		<if test="id != null" >
+        	#{id,jdbcType=INTEGER},
+    	</if>	
+		<if test="name != null" >
+        	#{name,jdbcType=VARCHAR},
+    	</if>	
+		<if test="pwd != null" >
+        	#{pwd,jdbcType=VARCHAR},
+    	</if>	
+		<if test="mobile != null" >
+        	#{mobile,jdbcType=VARCHAR},
+    	</if>	
+		<if test="email != null" >
+        	#{email,jdbcType=VARCHAR},
+    	</if>	
+		<if test="wechat != null" >
+        	#{wechat,jdbcType=VARCHAR},
+    	</if>	
+		<if test="department != null" >
+        	#{department,jdbcType=VARCHAR},
+    	</if>	
+		<if test="major != null" >
+        	#{major,jdbcType=VARCHAR},
+    	</if>	
+		<if test="status != null" >
+        	#{status,jdbcType=INTEGER},
+    	</if>	
+		<if test="type != null" >
+        	#{type,jdbcType=INTEGER},
+    	</if>	
+		<if test="createTime != null" >
+        	#{createTime,jdbcType=TIMESTAMP},
+    	</if>	
+    </trim>
+  </insert>
+
+  <delete id="deleteById" parameterType="Integer">
+    delete from staff where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <delete id="delete" parameterType="com.demo.hr.entity.criteria.StaffCriteria">
+    delete from staff 
+    <if test="_parameter != null" >
+      <include refid="Criteria_Where_Clause" />
+    </if>
+  </delete>
+ 
+  <update id="updateById" parameterType="Staff">
+    update staff
+    <set>
+		<if test="name != null" >
+        	`name` = #{name,jdbcType=VARCHAR},
+    	</if>	
+		<if test="pwd != null" >
+        	`pwd` = #{pwd,jdbcType=VARCHAR},
+    	</if>	
+		<if test="mobile != null" >
+        	`mobile` = #{mobile,jdbcType=VARCHAR},
+    	</if>	
+		<if test="email != null" >
+        	`email` = #{email,jdbcType=VARCHAR},
+    	</if>	
+		<if test="wechat != null" >
+        	`wechat` = #{wechat,jdbcType=VARCHAR},
+    	</if>	
+		<if test="department != null" >
+        	`department` = #{department,jdbcType=VARCHAR},
+    	</if>	
+		<if test="major != null" >
+        	`major` = #{major,jdbcType=VARCHAR},
+    	</if>	
+		<if test="status != null" >
+        	`status` = #{status,jdbcType=INTEGER},
+    	</if>	
+		<if test="type != null" >
+        	`type` = #{type,jdbcType=INTEGER},
+    	</if>	
+		<if test="createTime != null" >
+        	`create_time` = #{createTime,jdbcType=TIMESTAMP},
+    	</if>	
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    
+  <update id="update" parameterType="map">
+    update staff 
+    <set>
+		<if test="record.name != null" >
+        	`name` = #{record.name,jdbcType=VARCHAR},
+    	</if>	
+		<if test="record.pwd != null" >
+        	`pwd` = #{record.pwd,jdbcType=VARCHAR},
+    	</if>	
+		<if test="record.mobile != null" >
+        	`mobile` = #{record.mobile,jdbcType=VARCHAR},
+    	</if>	
+		<if test="record.email != null" >
+        	`email` = #{record.email,jdbcType=VARCHAR},
+    	</if>	
+		<if test="record.wechat != null" >
+        	`wechat` = #{record.wechat,jdbcType=VARCHAR},
+    	</if>	
+		<if test="record.department != null" >
+        	`department` = #{record.department,jdbcType=VARCHAR},
+    	</if>	
+		<if test="record.major != null" >
+        	`major` = #{record.major,jdbcType=VARCHAR},
+    	</if>	
+		<if test="record.status != null" >
+        	`status` = #{record.status,jdbcType=INTEGER},
+    	</if>	
+		<if test="record.type != null" >
+        	`type` = #{record.type,jdbcType=INTEGER},
+    	</if>	
+		<if test="record.createTime != null" >
+        	`create_time` = #{record.createTime,jdbcType=TIMESTAMP},
+    	</if>	
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Criteria_Where_Clause" />
+    </if>
+  </update>
+    
+  <select id="count" parameterType="com.demo.hr.entity.criteria.StaffCriteria" resultType="java.lang.Integer">
+    select count(*) from staff 
+    <if test="_parameter != null" >
+      <include refid="Criteria_Where_Clause" />
+    </if>
+  </select>
+  
+  <select id="selectById" resultMap="BaseResultMap" parameterType="Integer">
+    select 
+    <include refid="Base_Column_List" />
+    from staff 
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+    
+  <select id="select" resultMap="BaseResultMap" parameterType="com.demo.hr.entity.criteria.StaffCriteria">
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from staff 
+    <if test="_parameter != null" >
+      <include refid="Criteria_Where_Clause" />
+    </if>
+    <if test="sort != null" >
+		<if test="sort == 'id'">
+			order by `id` ${order}	
+		</if>
+		<if test="sort == 'name'">
+			order by `name` ${order}	
+		</if>
+		<if test="sort == 'pwd'">
+			order by `pwd` ${order}	
+		</if>
+		<if test="sort == 'mobile'">
+			order by `mobile` ${order}	
+		</if>
+		<if test="sort == 'email'">
+			order by `email` ${order}	
+		</if>
+		<if test="sort == 'wechat'">
+			order by `wechat` ${order}	
+		</if>
+		<if test="sort == 'department'">
+			order by `department` ${order}	
+		</if>
+		<if test="sort == 'major'">
+			order by `major` ${order}	
+		</if>
+		<if test="sort == 'status'">
+			order by `status` ${order}	
+		</if>
+		<if test="sort == 'type'">
+			order by `type` ${order}	
+		</if>
+		<if test="sort == 'createTime'">
+			order by `create_time` ${order}	
+		</if>
+    </if>
+  </select>  
+  
+</mapper>

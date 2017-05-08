@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.demo.hr.dao.EducationInfoDao" >
+
+  <resultMap id="BaseResultMap" type="EducationInfo" >
+	<result column="id" property="id" jdbcType="INTEGER" />
+	<result column="person_id" property="personId" jdbcType="INTEGER" />
+	<result column="begin_date" property="beginDate" jdbcType="VARCHAR" />
+	<result column="end_date" property="endDate" jdbcType="VARCHAR" />
+	<result column="school" property="school" jdbcType="VARCHAR" />
+	<result column="major" property="major" jdbcType="VARCHAR" />
+	<result column="xueli" property="xueli" jdbcType="VARCHAR" />
+	<result column="way" property="way" jdbcType="VARCHAR" />
+	<result column="num" property="num" jdbcType="INTEGER" />
+	<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+	<result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <sql id="Criteria_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  
+  <sql id="Update_By_Criteria_Where_Clause" >
+    <where >
+      <foreach collection="criteria.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  
+  
+  
+  <sql id="Base_Column_List" >
+    `id`,`person_id`,`begin_date`,`end_date`,`school`,`major`,`xueli`,`way`,`num`,`create_time`,`modify_time`
+  </sql>  
+  
+  <insert id="insert" parameterType="EducationInfo">
+	<selectKey resultType="Integer" keyProperty="id" order="AFTER" > 
+		select last_insert_id() as id 
+	</selectKey> 
+    insert into education_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+		<if test="id != null" >
+        	`id`,
+    	</if>	
+		<if test="personId != null" >
+        	`person_id`,
+    	</if>	
+		<if test="beginDate != null" >
+        	`begin_date`,
+    	</if>	
+		<if test="endDate != null" >
+        	`end_date`,
+    	</if>	
+		<if test="school != null" >
+        	`school`,
+    	</if>	
+		<if test="major != null" >
+        	`major`,
+    	</if>	
+		<if test="xueli != null" >
+        	`xueli`,
+    	</if>	
+		<if test="way != null" >
+        	`way`,
+    	</if>	
+		<if test="num != null" >
+        	`num`,
+    	</if>	
+		<if test="createTime != null" >
+        	`create_time`,
+    	</if>	
+		<if test="modifyTime != null" >
+        	`modify_time`,
+    	</if>	
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+		<if test="id != null" >
+        	#{id,jdbcType=INTEGER},
+    	</if>	
+		<if test="personId != null" >
+        	#{personId,jdbcType=INTEGER},
+    	</if>	
+		<if test="beginDate != null" >
+        	#{beginDate,jdbcType=VARCHAR},
+    	</if>	
+		<if test="endDate != null" >
+        	#{endDate,jdbcType=VARCHAR},
+    	</if>	
+		<if test="school != null" >
+        	#{school,jdbcType=VARCHAR},
+    	</if>	
+		<if test="major != null" >
+        	#{major,jdbcType=VARCHAR},
+    	</if>	
+		<if test="xueli != null" >
+        	#{xueli,jdbcType=VARCHAR},
+    	</if>	
+		<if test="way != null" >
+        	#{way,jdbcType=VARCHAR},
+    	</if>	
+		<if test="num != null" >
+        	#{num,jdbcType=INTEGER},
+    	</if>	
+		<if test="createTime != null" >
+        	#{createTime,jdbcType=TIMESTAMP},
+    	</if>	
+		<if test="modifyTime != null" >
+        	#{modifyTime,jdbcType=TIMESTAMP},
+    	</if>	
+    </trim>
+  </insert>
+
+  <delete id="deleteById" parameterType="Integer">
+    delete from education_info where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <delete id="delete" parameterType="com.demo.hr.entity.criteria.EducationInfoCriteria">
+    delete from education_info 
+    <if test="_parameter != null" >
+      <include refid="Criteria_Where_Clause" />
+    </if>
+  </delete>
+ 
+  <update id="updateById" parameterType="EducationInfo">
+    update education_info
+    <set>
+		<if test="personId != null" >
+        	`person_id` = #{personId,jdbcType=INTEGER},
+    	</if>	
+		<if test="beginDate != null" >
+        	`begin_date` = #{beginDate,jdbcType=VARCHAR},
+    	</if>	
+		<if test="endDate != null" >
+        	`end_date` = #{endDate,jdbcType=VARCHAR},
+    	</if>	
+		<if test="school != null" >
+        	`school` = #{school,jdbcType=VARCHAR},
+    	</if>	
+		<if test="major != null" >
+        	`major` = #{major,jdbcType=VARCHAR},
+    	</if>	
+		<if test="xueli != null" >
+        	`xueli` = #{xueli,jdbcType=VARCHAR},
+    	</if>	
+		<if test="way != null" >
+        	`way` = #{way,jdbcType=VARCHAR},
+    	</if>	
+		<if test="num != null" >
+        	`num` = #{num,jdbcType=INTEGER},
+    	</if>	
+		<if test="createTime != null" >
+        	`create_time` = #{createTime,jdbcType=TIMESTAMP},
+    	</if>	
+		<if test="modifyTime != null" >
+        	`modify_time` = #{modifyTime,jdbcType=TIMESTAMP},
+    	</if>	
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    
+  <update id="update" parameterType="map">
+    update education_info 
+    <set>
+		<if test="record.personId != null" >
+        	`person_id` = #{record.personId,jdbcType=INTEGER},
+    	</if>	
+		<if test="record.beginDate != null" >
+        	`begin_date` = #{record.beginDate,jdbcType=VARCHAR},
+    	</if>	
+		<if test="record.endDate != null" >
+        	`end_date` = #{record.endDate,jdbcType=VARCHAR},
+    	</if>	
+		<if test="record.school != null" >
+        	`school` = #{record.school,jdbcType=VARCHAR},
+    	</if>	
+		<if test="record.major != null" >
+        	`major` = #{record.major,jdbcType=VARCHAR},
+    	</if>	
+		<if test="record.xueli != null" >
+        	`xueli` = #{record.xueli,jdbcType=VARCHAR},
+    	</if>	
+		<if test="record.way != null" >
+        	`way` = #{record.way,jdbcType=VARCHAR},
+    	</if>	
+		<if test="record.num != null" >
+        	`num` = #{record.num,jdbcType=INTEGER},
+    	</if>	
+		<if test="record.createTime != null" >
+        	`create_time` = #{record.createTime,jdbcType=TIMESTAMP},
+    	</if>	
+		<if test="record.modifyTime != null" >
+        	`modify_time` = #{record.modifyTime,jdbcType=TIMESTAMP},
+    	</if>	
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Criteria_Where_Clause" />
+    </if>
+  </update>
+    
+  <select id="count" parameterType="com.demo.hr.entity.criteria.EducationInfoCriteria" resultType="java.lang.Integer">
+    select count(*) from education_info 
+    <if test="_parameter != null" >
+      <include refid="Criteria_Where_Clause" />
+    </if>
+  </select>
+  
+  <select id="selectById" resultMap="BaseResultMap" parameterType="Integer">
+    select 
+    <include refid="Base_Column_List" />
+    from education_info 
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+   <select id="selectByPersonId" resultMap="BaseResultMap" parameterType="Integer">
+    select 
+    <include refid="Base_Column_List" />
+    from education_info 
+    where person_id = #{pid,jdbcType=INTEGER}
+    order by num asc;
+  </select>
+  
+  <select id="select" resultMap="BaseResultMap" parameterType="com.demo.hr.entity.criteria.EducationInfoCriteria">
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from education_info 
+    <if test="_parameter != null" >
+      <include refid="Criteria_Where_Clause" />
+    </if>
+    <if test="sort != null" >
+		<if test="sort == 'id'">
+			order by `id` ${order}	
+		</if>
+		<if test="sort == 'personId'">
+			order by `person_id` ${order}	
+		</if>
+		<if test="sort == 'beginDate'">
+			order by `begin_date` ${order}	
+		</if>
+		<if test="sort == 'endDate'">
+			order by `end_date` ${order}	
+		</if>
+		<if test="sort == 'school'">
+			order by `school` ${order}	
+		</if>
+		<if test="sort == 'major'">
+			order by `major` ${order}	
+		</if>
+		<if test="sort == 'xueli'">
+			order by `xueli` ${order}	
+		</if>
+		<if test="sort == 'way'">
+			order by `way` ${order}	
+		</if>
+		<if test="sort == 'num'">
+			order by `num` ${order}	
+		</if>
+		<if test="sort == 'createTime'">
+			order by `create_time` ${order}	
+		</if>
+		<if test="sort == 'modifyTime'">
+			order by `modify_time` ${order}	
+		</if>
+    </if>
+  </select>  
+  
+</mapper>
